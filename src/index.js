@@ -5,7 +5,7 @@ function formatDate(timestamp) {
         hours = `0${hours}`
     }
     let minutes = date. getMinutes();
-    if (minutes< 10){
+    if (minutes < 10){
         minutes = `0${minutes}`;
     }
  
@@ -32,8 +32,20 @@ function displayTemperature(response) {
     iconElement.setAttribute("src", `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`);
     icon.setAttribute("alt", response.data.condition.description);
 }
-let apiKey = "feat836b3fcca8a0oba283a48d9a8f94";
-let city="New York"
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
 
-axios.get(apiUrl).then(displayTemperature);
+function search(city) {
+let apiKey = "feat836b3fcca8a0oba283a48d9a8f94";
+let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+axios.get(apiUrl).then(displayTemperature);   
+}
+
+function handleSubmit(event){
+    event.preventDefault();
+    let cityInputElement = document.querySelector("#city-input");
+    search(cityInputElement.value);
+}
+
+search("Mooresville");
+
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
