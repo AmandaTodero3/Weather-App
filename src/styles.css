@@ -62,3 +62,18 @@ li:first-letter{
     display: inline-block;
     vertical-align: middle;
 }
+
+#fahrenheit-link{
+    text-decoration: none;
+}
+#celsius-link {
+    text-decoration: none;
+}
+.weather-temperature .active {
+    color: black;
+    cursor: default;
+}
+
+.weather-temperature .active:hover {
+    text-decoration: none;
+}
