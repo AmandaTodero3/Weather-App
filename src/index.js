@@ -14,40 +14,6 @@ function formatDate(timestamp) {
     return `${day} ${hours}:${minutes}`;
 }
 
-function displayForecast(response) {
-    let forecast = response.data.daily;
-    
-    let forecastElement = document.querySelector("#forecast");
-
-    let forecastHTML = `<div class="row">`;
-    let daily = ["Thu", "Fri", "Sat", "Sun", "Mon", "Tue"];
-    daily.forEach(function (day) {
-        forecastHTML += ` 
-            <div class="col-2">
-                <div class="weather-forecast-date">
-                    ${day} 
-                </div>
-                <img 
-                src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-day.png" 
-                alt="" width="42">
-                <div class="weather-forecast-temperatures">
-                    <span class="weather-forecast-temperature-max">18°</span>
-                    <span class="weather-forecast-temperature-min">12°</span>  
-                </div>                          
-            </div>
-        `;
-    });
-
-    forecastHTML += `</div>`;
-    forecastElement.innerHTML = forecastHTML;
-}
-
-function getForecast(coordinates){
-    console.log(coordinates);  
-    let apiKey = `feat836b3fcca8a0oba283a48d9a8f94`;
-    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${coordinates.longitude}&lat=${coordinates.latitude}&key=${apiKey}&units=imperial`;
-    axios.get(apiUrl).then(displayForecast);
-}
 
 function displayTemperature(response) {
     console.log(response.data);
@@ -71,7 +37,6 @@ function displayTemperature(response) {
     icon.setAttribute("alt", response.data.condition.description);
     console.log(response.data);
 
-    getForecast(response.data.coordinates);
 }
 
 function search(city) {
@@ -105,6 +70,18 @@ function displayFahrenheitTemperature(event){
 
 }
 
+let body = document.querySelector('body');
+let date = new Date();
+let hour = date.getHours();
+
+if (hour < 12) {
+  body.style.background = 'linear-gradient(178deg, rgba(201, 234, 252, 0.51) 14.9%, rgba(139, 192, 216, 0.73) 80%)';
+} else if (hour < 18) {
+  body.style.background = 'orange';
+} else {
+  body.style.background = 'linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%)';
+}
+
 
 
 let fahrenheitTemperature = null;
@@ -118,5 +95,4 @@ celsiusLink.addEventListener("click", displayCelsiusTemperature);
 let fahrenheitLink = document.querySelector("#fahrenheit-link"); 
 fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 
-displayForecast();
 search("Mooresville");
